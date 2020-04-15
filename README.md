@@ -65,7 +65,7 @@ I have Visual Studio Professional but this app is very simple so it should build
 
 ## Developers & Contributors
 ----------------------------
-- Steve Preston (2020 Apr)
+- Steve Preston (2020 Apr) : stevepr@acm.org
 
 
 
