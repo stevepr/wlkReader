@@ -45,6 +45,7 @@ After importing the historical data from a CSV file, it may be a while before th
 ---------------------------------
 I have posted a zip file with the executible and the sample configuration file for Wee_import:
 http://www.netstevepr.com/misc/wlkReader.zip
+
 Just copy the wlkReader.exe file into any directory and run it from there.  When wlkReader starts it defaults to this "install" directory as the first place to look for the wlk files.
 
 ## Building / Modifiying wlkReader
