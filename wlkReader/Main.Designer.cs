@@ -32,13 +32,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openWLKFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAllRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toCSVFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectedRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lvRecords = new System.Windows.Forms.ListView();
-            this.exportAllRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toCSVFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -70,9 +70,24 @@
             // openWLKFileToolStripMenuItem
             // 
             this.openWLKFileToolStripMenuItem.Name = "openWLKFileToolStripMenuItem";
-            this.openWLKFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openWLKFileToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.openWLKFileToolStripMenuItem.Text = "Open WLK file...";
             this.openWLKFileToolStripMenuItem.Click += new System.EventHandler(this.openWLKFileToolStripMenuItem_Click);
+            // 
+            // exportAllRecordsToolStripMenuItem
+            // 
+            this.exportAllRecordsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toCSVFormatToolStripMenuItem});
+            this.exportAllRecordsToolStripMenuItem.Name = "exportAllRecordsToolStripMenuItem";
+            this.exportAllRecordsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.exportAllRecordsToolStripMenuItem.Text = "Export All Records";
+            // 
+            // toCSVFormatToolStripMenuItem
+            // 
+            this.toCSVFormatToolStripMenuItem.Name = "toCSVFormatToolStripMenuItem";
+            this.toCSVFormatToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.toCSVFormatToolStripMenuItem.Text = "To CSV format...";
+            this.toCSVFormatToolStripMenuItem.Click += new System.EventHandler(this.toCSVFormatToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -116,21 +131,6 @@
             this.lvRecords.View = System.Windows.Forms.View.Details;
             this.lvRecords.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvRecords_ColumnClick);
             // 
-            // exportAllRecordsToolStripMenuItem
-            // 
-            this.exportAllRecordsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toCSVFormatToolStripMenuItem});
-            this.exportAllRecordsToolStripMenuItem.Name = "exportAllRecordsToolStripMenuItem";
-            this.exportAllRecordsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportAllRecordsToolStripMenuItem.Text = "Export All Records";
-            // 
-            // toCSVFormatToolStripMenuItem
-            // 
-            this.toCSVFormatToolStripMenuItem.Name = "toCSVFormatToolStripMenuItem";
-            this.toCSVFormatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.toCSVFormatToolStripMenuItem.Text = "To CSV format...";
-            this.toCSVFormatToolStripMenuItem.Click += new System.EventHandler(this.toCSVFormatToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,7 +141,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
-            this.Text = "wlkReader";
+            this.Text = "wlkReader v1.0";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
