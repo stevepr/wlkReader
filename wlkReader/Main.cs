@@ -500,7 +500,7 @@ namespace wlkReader
                 {
                     // write header
                     //
-                    sw.WriteLine("Time,TempOut,TempIn,HumIn,HumOut,Baro,Rain,Rate,Wind,WindDir,Gust,GustDir");
+                    sw.WriteLine("Time,TempOut,TempIn,HumOut,HumIn,Baro,Rain,Rate,Wind,WindDir,Gust,GustDir");
 
                     // write data lines
                     //
