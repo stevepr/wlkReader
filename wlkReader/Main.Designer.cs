@@ -100,7 +100,7 @@
             // selectedRecordToolStripMenuItem
             // 
             this.selectedRecordToolStripMenuItem.Name = "selectedRecordToolStripMenuItem";
-            this.selectedRecordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.selectedRecordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.selectedRecordToolStripMenuItem.Text = "Selected Record ...";
             this.selectedRecordToolStripMenuItem.Click += new System.EventHandler(this.selectedRecordToolStripMenuItem_Click);
             // 
@@ -141,7 +141,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
-            this.Text = "wlkReader v1.0";
+            this.Text = "wlkReader v1.1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
