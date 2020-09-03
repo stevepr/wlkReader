@@ -360,7 +360,7 @@ namespace wlkReader
             }
             else
             {
-                lviTmp.SubItems.Add(string.Format("{0:0}", iTmp * 15));
+                lviTmp.SubItems.Add(string.Format("{0:0}", iTmp * 24));
             }
 
             // gust
@@ -376,7 +376,7 @@ namespace wlkReader
             }
             else
             {
-                lviTmp.SubItems.Add(string.Format("{0:0}", iTmp * 15));
+                lviTmp.SubItems.Add(string.Format("{0:0}", iTmp * 24));
             }
 
             return lviTmp;
