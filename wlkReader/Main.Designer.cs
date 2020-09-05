@@ -128,7 +128,7 @@
             // 
             this.lvRecords.HideSelection = false;
             this.lvRecords.Location = new System.Drawing.Point(17, 50);
-            this.lvRecords.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvRecords.Margin = new System.Windows.Forms.Padding(4);
             this.lvRecords.Name = "lvRecords";
             this.lvRecords.Size = new System.Drawing.Size(1217, 421);
             this.lvRecords.TabIndex = 2;
@@ -145,9 +145,9 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Main";
-            this.Text = "wlkReader v1.2";
+            this.Text = "wlkReader v1.3";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
