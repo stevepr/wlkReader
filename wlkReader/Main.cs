@@ -13,6 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
+using System.Globalization;
 
 namespace wlkReader
 {
@@ -35,9 +37,19 @@ namespace wlkReader
         // global data
         //======================================================================
 
+        // settings
+        //
+        clsSettings gSettings;
+
         // misc
         //
         private ListViewColumnSorter lvwColumnSorter;
+        private string strHeaderLine =  "Time,TempOut,TempIn,HumOut,HumIn,Baro,Rain,Rate,Wind,WindDir,Gust,GustDir," +
+                                        "Rad,hiRad,UV,hiUV,LTemp0,LTemp1,LTemp2,LTemp3,xRad,new0,new1,new2,new3,new4,new5," +
+                                        "forecast,ET,STemp0,STemp1,STemp2,STemp3,STemp4,STemp5,SMoist0,SMoist1,SMoist2," +
+                                        "SMoist3,SMoist4,SMoist5,LWet0,LWet1,LWet2,LWet3,XTemp0,XTemp1,XTemp2,XTemp3," +
+                                        "XTemp4,XTemp5,XTemp6,XHum0,XHum1,XHum2,XHum3,XHum4,XHum5,XHum6";
+        private int lvFieldCount = 59;
 
         // Header Block
         //
@@ -65,6 +77,8 @@ namespace wlkReader
 
             // init
             //
+            gSettings = new clsSettings();
+
             lstRecords = new List<clsWeatherData>();
 
             // setup ListView
@@ -82,6 +96,54 @@ namespace wlkReader
             lvRecords.Columns.Add("WindDir");       // 9
             lvRecords.Columns.Add("Gust");          // 10
             lvRecords.Columns.Add("GustDir");       // 11
+            lvRecords.Columns.Add("Rad");           // 12
+            lvRecords.Columns.Add("hiRad");         // 13
+            lvRecords.Columns.Add("UV");            // 14
+            lvRecords.Columns.Add("hiUV");          // 15
+            lvRecords.Columns.Add("LTemp0");            // 16
+            lvRecords.Columns.Add("LTemp1");            // 17
+            lvRecords.Columns.Add("LTemp2");            // 18
+            lvRecords.Columns.Add("LTemp3");            // 19
+            lvRecords.Columns.Add("xRad");            // 20
+            lvRecords.Columns.Add("new0");            // 22
+            lvRecords.Columns.Add("new1");            // 23
+            lvRecords.Columns.Add("new2");            // 24
+            lvRecords.Columns.Add("new3");            // 25
+            lvRecords.Columns.Add("new4");            // 26
+            lvRecords.Columns.Add("new5");            // 27
+            lvRecords.Columns.Add("forecast");            // 28
+            lvRecords.Columns.Add("ET");            // 29
+            lvRecords.Columns.Add("STemp0");            // 30
+            lvRecords.Columns.Add("STemp1");            // 31
+            lvRecords.Columns.Add("STemp2");            // 32
+            lvRecords.Columns.Add("STemp3");            // 33
+            lvRecords.Columns.Add("STemp4");            // 34
+            lvRecords.Columns.Add("STemp5");            // 35
+            lvRecords.Columns.Add("SMoist0");            // 36
+            lvRecords.Columns.Add("SMoist1");            // 37
+            lvRecords.Columns.Add("SMoist2");            // 38
+            lvRecords.Columns.Add("SMoist3");            // 39
+            lvRecords.Columns.Add("SMoist4");            // 40
+            lvRecords.Columns.Add("SMoist5");            // 41
+            lvRecords.Columns.Add("LWet0");            // 42
+            lvRecords.Columns.Add("LWet1");            // 43
+            lvRecords.Columns.Add("LWet2");            // 44
+            lvRecords.Columns.Add("LWet3");            // 45
+            lvRecords.Columns.Add("XTemp0");            // 46
+            lvRecords.Columns.Add("XTemp1");            // 47
+            lvRecords.Columns.Add("XTemp2");            // 48
+            lvRecords.Columns.Add("XTemp3");            // 49
+            lvRecords.Columns.Add("XTemp4");            // 50
+            lvRecords.Columns.Add("XTemp5");            // 51
+            lvRecords.Columns.Add("XTemp6");            // 52
+            lvRecords.Columns.Add("XHum0");            // 53
+            lvRecords.Columns.Add("XHum1");            // 54
+            lvRecords.Columns.Add("XHum2");            // 55
+            lvRecords.Columns.Add("XHum3");            // 56
+            lvRecords.Columns.Add("XHum4");            // 57
+            lvRecords.Columns.Add("XHum5");            // 58
+            lvRecords.Columns.Add("XHum6");            // 59
+
 
             lvRecords.View = View.Details;
 
@@ -241,12 +303,14 @@ namespace wlkReader
         //----------------------------------------------------
         private ListViewItem DisplayLine(clsWeatherData oRecord)
         {
+
             ListViewItem lviTmp;
             int rainCollecterType;
             int rainClicks;
             double rainFactor;
             double rainVal;
             int iTmp;
+            double dTmp;
 
             //init
             //
@@ -379,6 +443,151 @@ namespace wlkReader
                 lviTmp.SubItems.Add(string.Format("{0:0.0}", iTmp * 22.5));
             }
 
+
+            // Solar Radiation
+            //
+            iTmp = oRecord.solarRad;
+            lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+
+            // Hi Solar Radiation
+            //
+            iTmp = oRecord.hisolarRad;
+            lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+
+            // UV
+            //
+            dTmp = (double)oRecord.UV * 0.1;
+            lviTmp.SubItems.Add(string.Format("{0:0.000}", dTmp));
+
+            // hiUV
+            //
+            dTmp = (double)oRecord.hiUV * 0.1;
+            lviTmp.SubItems.Add(string.Format("{0:0.000}", dTmp));
+
+            // leaf Temp
+            //      value of 255 => no value
+            //
+            for ( int i=0; i< 4; i++)
+            {
+                iTmp = (int)oRecord.leafTemp[i];
+                if (iTmp == 255)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp-90));
+                }
+            }
+
+            // extra Rad
+            //
+            iTmp = oRecord.extraRad;
+            lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+
+            // new Sensors
+            //      NOTE:
+            //          0x8000 = -32768 => no valid data present
+            //
+            for (int i = 0; i < 6; i++)
+            {
+                iTmp = (int)oRecord.newSensors[i];
+                if (iTmp == -32768)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+                }
+            }
+
+            // forecast code
+            //
+            iTmp = oRecord.forecast;
+            lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+
+            // ET
+            //
+            dTmp = (double)oRecord.ET * 0.001;
+            lviTmp.SubItems.Add(string.Format("{0:0.000}", dTmp));
+
+            // soil temp
+            //
+            for (int i = 0; i < 6; i++)
+            {
+                iTmp = (int)oRecord.soilTemp[i];
+                if (iTmp == 255)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp - 90));
+                }
+            }
+
+            // soil Moisture
+            //
+            for (int i = 0; i < 6; i++)
+            {
+                iTmp = (int)oRecord.soilMoisture[i];
+                if (iTmp == 255)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+                }
+            }
+
+            // leaf Wetness
+            //
+            for (int i = 0; i < 4; i++)
+            {
+                iTmp = (int)oRecord.leafWetness[i];
+                if (iTmp == 255)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+                }
+            }
+
+            // extraTemp
+            //
+            for (int i = 0; i < 7; i++)
+            {
+                iTmp = (int)oRecord.extraTemp[i];
+                if (iTmp == 255)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp - 90));
+                }
+            }
+
+            // extraHum
+            //
+            for (int i = 0; i < 7; i++)
+            {
+                iTmp = (int)oRecord.extraHum[i];
+                if (iTmp == 255)
+                {
+                    lviTmp.SubItems.Add("");
+                }
+                else
+                {
+                    lviTmp.SubItems.Add(string.Format("{0:0}", iTmp));
+                }
+            }
+
+
             return lviTmp;
 
         } // end of DisplayLine
@@ -472,7 +681,7 @@ namespace wlkReader
         } // end of Edit Record
 
         //----------------------------------------------------
-        // Edit All Records to CSV format
+        // Export All Records to CSV format
         //----------------------------------------------------
         private void toCSVFormatToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -491,6 +700,7 @@ namespace wlkReader
             //
             fpCSV = Path.ChangeExtension(fpWLK,"csv");
 
+
             // start writing
             //
             toolStripStatusLabel1.Text = "Writing data to CSV...";
@@ -499,17 +709,18 @@ namespace wlkReader
                 using (StreamWriter sw = new StreamWriter(fpCSV))
                 {
                     // write header
+                    //  and update field delimiter
                     //
-                    sw.WriteLine("Time,TempOut,TempIn,HumOut,HumIn,Baro,Rain,Rate,Wind,WindDir,Gust,GustDir");
+                    sw.WriteLine(strHeaderLine.Replace(',',gSettings.cDelimiter));
 
                     // write data lines
                     //
                     foreach( ListViewItem lvi in lvRecords.Items)
                     {
                         sbTmp = new StringBuilder(lvi.SubItems[0].Text);
-                        for(int j = 1; j< 12; j++)
+                        for(int j = 1; j< lvFieldCount; j++)
                         {
-                            sbTmp.Append(string.Format(",{0}", lvi.SubItems[j].Text));
+                            sbTmp.Append(string.Format("{0}{1}",gSettings.cDelimiter, lvi.SubItems[j].Text));
                         }
                         sw.WriteLine(sbTmp.ToString());
                     }
@@ -528,5 +739,14 @@ namespace wlkReader
 
         }  // end of Export CSV
 
+        //----------------------------------------------------------------
+        //  CSV Export settings dialog
+        //----------------------------------------------------------------
+        private void cSVExportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dlgCSVsettings dlgCSV = new dlgCSVsettings(gSettings);
+            dlgCSV.ShowDialog();
+
+        }
     } // end of form class
 }

@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsWeatherData.cs" />
+    <Compile Include="dlgCSVsettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgCSVsettings.Designer.cs">
+      <DependentUpon>dlgCSVsettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="dlgRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="dlgCSVsettings.resx">
+      <DependentUpon>dlgCSVsettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dlgRecord.resx">
       <DependentUpon>dlgRecord.cs</DependentUpon>
     </EmbeddedResource>

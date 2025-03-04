@@ -89,7 +89,13 @@ namespace wlkReader
             hisolarRad = brInput.ReadInt16();
             UV = brInput.ReadByte();
             hiUV = brInput.ReadByte();
-            leafTemp = brInput.ReadBytes(4);
+
+            leafTemp = new byte[4];
+            for (int i=0; i<4; i++)
+            {
+                leafTemp[i] = brInput.ReadByte();
+            }
+            
             extraRad = brInput.ReadInt16();
 
             newSensors = new short[6];
@@ -101,13 +107,62 @@ namespace wlkReader
             forecast = brInput.ReadByte();
             ET = brInput.ReadByte();
 
-            soilTemp = brInput.ReadBytes(6);
-            soilMoisture = brInput.ReadBytes(6);
-            leafWetness = brInput.ReadBytes(4);
-            extraTemp = brInput.ReadBytes(7);
-            extraHum = brInput.ReadBytes(7);
+            soilTemp = new byte[6];
+            for(int i=0; i< 6; i++)
+            {
+                soilTemp[i] = brInput.ReadByte();
+            }
+
+            soilMoisture = new byte[6];
+            for(int i=0; i< 6; i++)
+            {
+                soilMoisture[i] = brInput.ReadByte();
+            }
+
+            leafWetness = new byte[4];
+            for (int i=0; i< 4; i++)
+            {
+                leafWetness[i] = brInput.ReadByte();
+            }
+
+            extraTemp = new byte[7];
+            for (int i=0; i< 7; i++)
+            {
+                extraTemp[i] = brInput.ReadByte();
+            }
+
+            extraHum = new byte[7];
+            for(int i=0; i< 7; i++)
+            {
+                extraHum[i] = brInput.ReadByte();
+            }
+            
 
         } // end of Decode
 
     } // end of class clsWeatherData
+
+    // Settings data
+    //
+    public class clsSettings
+    {
+
+        //====================================
+        // Properties
+        //====================================
+
+        // csv export settings
+        //
+        public char cDelimiter;     // field delimiter character
+        public char cDecimal;       // decimal separator character
+
+
+        public clsSettings()
+        {
+            cDelimiter = ',';       // default to comma field separator for CSV
+            cDecimal = '.';         // default to period for decimal separator
+        }
+    };
+
+
 }
